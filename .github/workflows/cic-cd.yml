@@ -10,24 +10,27 @@ jobs:
     build_scan:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout the Code
-              uses: actions/checkout@v7
-            - name: Trivy Scan
-              uses: aquasecurity/trivy-action@v0.36.0
-              with:
+           - name: checkout codee
+             uses: actions/checkout@v7
+           - name:   Trivy Scan
+             uses: aquasecurity/trivy-action@v0.36.0
+             with:
                 scan-type: 'fs'
                 severity: HIGH,CRITICAL
-                exit-code: 1
-            - name: Build Docker Image
-              run: docker build -t 315558363288.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest .
-            
-            - name: Scan image with Trivy 
-              uses: aquasecurity/trivy-action@v0.36.0
-              with: 
-                image-ref: 315558363288.dkr.ecr.us-east-1.amazonaws.com/my-repo:latest
-                format: table 
                 exit-code: 1 
+           - name:  Build image
+             run: docker build -t 196135431738.dkr.ecr.us-east-1.amazonaws.com/portfolio-ecr:latest .    
+           
+           - name: Scan image with Trivy 
+             uses: aquasecurity/trivy-action@v0.36.0
+             with: 
+                image-ref: 196135431738.dkr.ecr.us-east-1.amazonaws.com/portfolio-ecr:latest
+                format: table 
+                exit-code: 1
                 ignore-unfixed: true 
                 severity: CRITICAL,HIGH
-            - name: Push image to Ecr
+           -  name: Push image to Ecr
               run: echo "push"
+            
+
+  
