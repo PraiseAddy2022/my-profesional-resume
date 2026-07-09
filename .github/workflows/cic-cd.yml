@@ -55,10 +55,9 @@ jobs:
               uses: aws-actions/configure-aws-credentials@v4 # More information on this action can be found below in the 'AWS Credentials' section
               with:
                 role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-            - name: Deploy to Amazon ECS
-              uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-              with:
-                 task-definition: myapp-task
-                 service: myapp-service
-                 cluster: myapp-cluster
-                 wait-for-service-stability: true       
+            - name: Deploy to ECS
+              run: |
+                aws ecs update-service \
+                --cluster ${{ secrets.ECS_CLUSTER }} \
+                --service ${{ secrets.ECS_SERVICE }} \
+                --force-new-deployment        
