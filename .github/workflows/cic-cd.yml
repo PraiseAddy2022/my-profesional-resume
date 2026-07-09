@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-    build_scan:
+    Build_scan:
         runs-on: ubuntu-latest
         steps:
            - name: checkout code
@@ -46,3 +46,14 @@ jobs:
 
            - name: push Image to Ecr
              run: docker push ${{ secrets.ECR_REPO }}/portfolio-ecr:latest
+
+    Deploy_to_Ecs:
+        needs: Build_scan
+        runs-on: ubuntu-latest   
+        steps:
+            - name: Configure AWS credentials
+              uses: aws-actions/configure-aws-credentials@v4 # More information on this action can be found below in the 'AWS Credentials' section
+              with:
+                role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+            - name: deploy to Ecs
+              run: echo "Deploy to ecs"       
