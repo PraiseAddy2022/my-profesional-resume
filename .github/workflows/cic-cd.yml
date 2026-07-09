@@ -44,4 +44,5 @@ jobs:
              uses: aws-actions/amazon-ecr-login@v2     
             
 
-  
+           - name: push Image to Ecr
+             run: docker push 196135431738.dkr.ecr.us-east-1.amazonaws.com/portfolio-ecr:latest
