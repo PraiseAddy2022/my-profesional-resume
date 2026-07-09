@@ -23,12 +23,12 @@ jobs:
                 severity: HIGH,CRITICAL
                 exit-code: 1 
            - name:  Build image
-             run: docker build -t ${{secrets.ECR_REPO}}/portfolio-ecr:latest .    
+             run: docker build -t ${{ secrets.ECR_REPO }}/portfolio-ecr:latest .    
            
            - name: Scan image with Trivy 
              uses: aquasecurity/trivy-action@v0.36.0
              with: 
-                image-ref: ${{secrets.ECR_REPO}}/portfolio-ecr:latest
+                image-ref: ${{ secrets.ECR_REPO }}/portfolio-ecr:latest
                 format: table 
                 exit-code: 0
                 ignore-unfixed: true 
@@ -37,7 +37,7 @@ jobs:
            - name: Configure AWS credentials
              uses: aws-actions/configure-aws-credentials@v4 # More information on this action can be found below in the 'AWS Credentials' section
              with:
-                role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+                role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
                 aws-region: us-east-1
            - name: Login to Amazon ECR
              id: login-ecr
@@ -45,4 +45,4 @@ jobs:
             
 
            - name: push Image to Ecr
-             run: docker push ${{secrets.ECR_REPO}}/portfolio-ecr:latest
+             run: docker push ${{ secrets.ECR_REPO }}/portfolio-ecr:latest
